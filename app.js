@@ -3,91 +3,46 @@ let app = new Vue({
     data:{
         logo:"images/logo.png",
         searchData:'Hello',
-        lessons:[
-            {
-                subject:"Maths",
-                location:"CG02",
-                price:"$100",
-                spaces:5,
-                icon: "images/maths_icon.png"
-            },
-            {
-                subject:"French",
-                location:"BG01",
-                price:"$120",
-                spaces:10,
-                icon:"images/french_icon.png"
-            },
-            {
-                subject:"English",
-                location:"EF04",
-                price:"$120",
-                spaces:12,
-                icon:"images/english_icon.png"
-            },
-            {
-                subject:"Computer Science",
-                location:"BG04",
-                price:"$150",
-                spaces:4,
-                icon:"images/cs_icon.png"
-            },
-            {
-                subject:"History",
-                location:"EF01",
-                price:"$80",
-                spaces:5,
-                icon:"images/history_icon.png"
-            },
-            {
-                subject:"Maths",
-                location:"CG02",
-                price:"$100",
-                spaces:5,
-                icon: "images/maths_icon.png"
-            },
-            {
-                subject:"French",
-                location:"BG01",
-                price:"$120",
-                spaces:10,
-                icon:"images/french_icon.png"
-            },
-            {
-                subject:"English",
-                location:"EF04",
-                price:"$120",
-                spaces:12,
-                icon:"images/english_icon.png"
-            },
-            {
-                subject:"Computer Science",
-                location:"BG04",
-                price:"$150",
-                spaces:4,
-                icon:"images/cs_icon.png"
-            },
-            {
-                subject:"History",
-                location:"EF01",
-                price:"$80",
-                spaces:5,
-                icon:"images/history_icon.png"
-            },
-        ]
+        lessons:[]
     },
-    // methods:{
-    //     setBackgroundColor(lesson){
-    //         switch(lesson.subject){
-    //             case "Maths":
-    //                 return{
-    //                     backgroundImage:"url('images/icons8-maths-64.png')",
-    //                     backgroundSize:'cover',
-    //                     backgroundPosition:'center'
-    //                 };
+    methods:{
+        // setBackgroundColor(lesson){
+        //     switch(lesson.subject){
+        //         case "Maths":
+        //             return{
+        //                 backgroundImage:"url('images/icons8-maths-64.png')",
+        //                 backgroundSize:'cover',
+        //                 backgroundPosition:'center'
+        //             };
                     
-    //         }
-    //     }    
-    // }
+        //     }
+        // }    
+
+        //fetch get
+        getLessons(){
+            fetch('/api/lessons', {
+                method:'GET',
+                credentials:"include",
+                headers:{
+                    'Content-Type':'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                lessons = data;
+                // const status = data.message;
+                // const username = data.data;
+                
+                // const sessionUsername = document.getElementById("sessionUsername");
+                // const userStatus = document.getElementById("userStatus");
+        
+                // sessionUsername.innerHTML = `Username: ${username}`;
+                // userStatus.innerHTML =`Status:${status}`;  
+            }); 
+        }
+    },
+    mounted(){
+        this.getLessons(); //this will fetch lessons when the app loads or reloads
+    },
 
 })
