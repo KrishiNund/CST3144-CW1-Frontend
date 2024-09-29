@@ -1,129 +1,87 @@
+:root{
+    /*Colors being used*/
+    --primary-color: #1b263b;
+    --secondary-color: #415a77;
+    --neutral-color: #e0e1dd;
+    --accent-color:#778DA9;
+    --hover-color:#1B263B;
+
+    /*Fonts being used*/
+    --font-primary:'Roboto', sans-serif;
+    --font-secondary:'Open Sans', sans-serif;  
+}
+
 body{
-    background-color: #f0f8ff ;
-    color: #333333;
-}
-.logo{
-    display: block;
-    position: relative;
-    margin-left: auto;
-    margin-right: auto;
+    background-color: var(--neutral-color);
+    margin: 0 auto;
 }
 
-.searchBar{
-    display: block;
-    position: relative;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 2em;
-    width: 70%;
-    height: 2em;
-    font-size: medium;
-    border: 2px solid #828282;
-    border-radius: 20px;
-    text-align: center;
+header{
+    background-color: var(--neutral-color);
+    padding: 0.3rem 0;
+    border-bottom: 0.1rem solid var(--accent-color);
 }
 
-header i{
-    display: block;
-    position: relative;
-    bottom: 1.7em;
-    left: 73em;
+.header__container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
 }
 
-.title{
-    display: block;
-    position: relative;
-    text-align: center;
+.header__logo{
+    display: flex;
+    flex-direction: row;
+    text-decoration: none;
+    color: var(--primary-color);
+    align-items: center;
+    /* padding-left: 1rem; */
 }
 
-.lessonContainer{
-    display: grid;
-    grid-template-columns: repeat(3,1fr);
-    grid-template-rows: auto;
-    gap: 10px;
-    padding: 20px;
-    position: relative;
-    background-color: #a7bacb;
-    width: 60em;
-    height: 30em;
-    left: 25em;
-    margin-top: 2em;
-    overflow-y: auto;
+.header__logo h1{
+    font-family: var(--font-primary);
+    font-size: 1.5rem;
+    padding-left: 0.25rem;
 }
 
-.lessonCard{
-    display: block;
-    position: relative;
-    width: 15em;
-    height: 10em;
-    background-color: #cce7ff;
-    text-align: left;
-    color: #333333;
-    padding: 20px;
-    border: 2px solid black;
-    border-radius: 20px;
-}
-
-.lessonIcon{
-    display: block;
-    position: relative;
-    bottom: 7.5em;
-    left: 8em;
-}
-
-.counter{
+.header__searchbox{
     display: flex;
     flex-direction: row;
     position: relative;
-    bottom: 7.5em;
-    justify-content: center;
-    z-index: 1;
     align-items: center;
+    width: 65%;
+    /* margin-left: 10rem; */
 }
 
-.counter button{
-    display: block;
-    width: 2.5em;
-    height: 1.7em;
-    text-align: center;
-}
-.counter p{
-    display: block;
-    width: 3em;
-    height: 1.3em;
-    text-align: center;
-    background-color: white;
+.header__searchbox input{
+    width: 100%;
+    text-indent: 2rem;
+    padding: 1rem;
+    margin: 0 auto;
+    border: 0.1rem solid var(--accent-color);
+    border-radius: 0.5rem;
+    font-family: var(--font-secondary);
+    font-size: 1rem;
 }
 
-main{
+.header__searchbox input:hover{
+    border-color: var(--hover-color);
+}
+.header__searchbox i{
+    position: absolute;
+    left: 0.8rem;
+    color: var(--secondary-color);
+}
+
+.header__cart{
     display: flex;
     flex-direction: row;
-}
-.sortingSection{
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    background-color: yellow;
-    width: 15em;
-    height: 15em;
-    justify-content: center;
-    align-items: flex-start;
-    padding-left: 6em;
-    right: 60em;
-}
-
-.sortingSection div{
-    display: flex;
     align-items: center;
-    margin-bottom: 1em;
+    color: var(--primary-color);
 }
 
-input[type="radio"]{
-    margin-right: 0.5em;
-}
-
-.sortingSection button{
-    display: block;
-    position: relative;
-    margin-left: 4em;
+.header__cart p{
+    padding-left: 0.25rem;
+    font-family: var(--font-secondary);
+    font-size: 1rem;
 }

@@ -6,74 +6,33 @@
     <link rel="stylesheet" href="app.css">
     <script src="https://unpkg.com/vue@2.7.8/dist/vue.js"></script>
     <script src="https://kit.fontawesome.com/df395f211e.js" crossorigin="anonymous"></script>
-    <title>After School Classes</title>
+    <title>Classly</title>
 </head>
 <body>
     <div id="app">
+
         <header>
-            <img :src="logo" alt="logo" class="logo">
-            <h2 class="title">After School Classes</h2>
-            <input type="text" v-model="searchData" class="searchBar">
-            <i class="fa-solid fa-magnifying-glass"></i>
+            <div class="header__container">
+                <a href="/" class="header__logo">
+                    <i class="fa-solid fa-graduation-cap fa-xl"></i>
+                    <h1>Classly</h1>
+                </a>
+
+                <div class="header__searchbox">
+                    <input type="search" placeholder="Search for lesson...">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </div>
+
+                <div class="header__cart">
+                    <i class="fa-solid fa-cart-shopping fa-lg"></i>
+                    <p>Cart</p>
+                </div>
+            </div>
         </header>
 
-        <main>
-            <div class="lessonContainer">
-                <div v-for="lesson in lessons" class="lessonCard">
-                    <p>Subject: {{lesson.subject}}</p>
-                    <p>Location: {{lesson.location}}</p>
-                    <p>Price: {{lesson.price}}</p>
-                    <p>Spaces: {{lesson.spaces}}</p>
-                    <img :src="lesson.icon" alt="lessonIcon" class="lessonIcon">
-                    <div class="counter">
-                        <button>-</button>
-                        <p>0</p>
-                        <button>+</button>
-                    </div>
-                </div>
-            </div>
-
-            
-
-
-            <div class="sortingSection">
-                <!-- <div>
-                    <input id="subject" type="radio" value="subject">
-                    <label for="subject">Sort by subject</label>
-                </div>
-
-                <div>
-                    <input id="location" type="radio" value="location">
-                    <label for="location">Sort by location</label>
-                </div>
-
-                <div>
-                    <input id="price" type="radio" value="price">
-                    <label for="price">Sort by price</label>
-                </div>
-
-                <div>
-                    <input id="spaces" type="radio" value="spaces">
-                    <label for="spaces">Sort by spaces</label>
-                </div>
-
-                <div>
-                    <input id="ascending" type="checkbox">
-                    <label for="ascending">Sort in ascending order</label>
-                </div>
-                
-                <div>
-                    <input id="descending" type="checkbox">
-                    <label for="descending">Sort in descending order</label>
-                </div>
-
-                <button>Sort</button> -->
-                
-
-            </div>
-            
-        </main>
     </div>
+    
+    
     
 
 
