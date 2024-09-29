@@ -3,42 +3,23 @@ let app = new Vue({
     data:{
         logo:"images/logo.png",
         searchData:'Hello',
-        lessons:[]
+        lessons:[],
     },
     methods:{
-        // setBackgroundColor(lesson){
-        //     switch(lesson.subject){
-        //         case "Maths":
-        //             return{
-        //                 backgroundImage:"url('images/icons8-maths-64.png')",
-        //                 backgroundSize:'cover',
-        //                 backgroundPosition:'center'
-        //             };
-                    
-        //     }
-        // }    
-
         //fetch get
         getLessons(){
-            fetch('/api/lessons', {
+            fetch('http://localhost:3000/api/lessons', {
                 method:'GET',
-                credentials:"include",
                 headers:{
                     'Content-Type':'application/json'
                 }
             })
             .then(response => response.json())
             .then(data => {
-                lessons = data;
-                // const status = data.message;
-                // const username = data.data;
-                
-                // const sessionUsername = document.getElementById("sessionUsername");
-                // const userStatus = document.getElementById("userStatus");
-        
-                // sessionUsername.innerHTML = `Username: ${username}`;
-                // userStatus.innerHTML =`Status:${status}`;  
-            }); 
+                this.lessons = data.data;
+                console.log(this.lessons);
+            })
+            .catch(err => console.log("Error fetching lessons: ", err));
         }
     },
     mounted(){
