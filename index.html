@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="app.css">
+    <link rel="icon" type="image/x-icon" href="/images/logo.png">
 
     <!--Importing google font "Orbitron"-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -39,7 +40,33 @@
         </header>
 
         <main>
-            
+
+            <div class="sorting">
+                <button>
+                    <i class="fa-solid fa-filter"></i>
+                </button>
+
+                <button>
+                    <i class="fa-solid fa-sort"></i>
+                </button>
+            </div>
+
+            <div class="lessonContainer">
+
+                <div v-for="lesson in lessons" class="lesson">
+                    <div class="lesson__subject">
+                        {{lesson.subject}}
+                    </div>
+                    <img :src="lesson.icon" alt="lesson_icon">
+                    <hr>
+                    <h2>{{lesson.subject}}</h2>
+                    <p>{{lesson.location}}</p>
+                    <p>{{lesson.price}}</p>
+                </div>
+                
+
+            </div>
+
         </main>
 
     </div>

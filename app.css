@@ -21,7 +21,7 @@ header{
     background-color: var(--neutral-color);
     padding: 0.3rem 0;
     border-bottom: 0.1rem solid var(--accent-color);
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
 }
 
 .header__container{
@@ -37,13 +37,14 @@ header{
     text-decoration: none;
     color: var(--primary-color);
     align-items: center;
+    gap: 0.25rem;
     /* padding-left: 1rem; */
 }
 
 .header__logo h1{
     font-family: var(--font-primary);
     font-size: 1.5rem;
-    padding-left: 0.25rem;
+    /* padding-left: 0.25rem; */
 }
 
 .header__searchBox{
@@ -98,10 +99,11 @@ header{
     flex-direction: row;
     align-items: center;
     color: var(--primary-color);
+    gap: 0.25rem;
 }
 
 .header__cart p{
-    padding-left: 0.25rem;
+    /* padding-left: 0.25rem; */
     font-family: var(--font-secondary);
     font-size: 1rem;
 }
@@ -120,4 +122,63 @@ header{
     align-items: center;
     font-size: 0.8rem;
     padding: 0;
+}
+
+.sorting{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-top: -3rem;
+    margin-left: 1rem;
+    gap: 1rem;
+    float: left;
+    position: absolute;
+}
+
+.sorting button{
+    width: 2rem;
+    height: 2rem;
+    align-items: center;
+    border: 2px solid var(--primary-color);
+    border-radius: 1rem;
+}
+
+.lessonContainer{
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    grid-template-rows: auto;
+    gap: 1.5rem;
+    margin-top: 5rem;
+    padding: 1rem;
+}
+
+.lesson{
+    display: flex;
+    flex-direction: column;
+    background-color: var(--neutral-color);
+    border: 1px solid var(--accent-color);
+    box-shadow: 0 5px 5px rgba(0,0,0,0.2);
+    border-radius: 0.5rem;
+    align-items:center;
+}
+
+.lesson__subject{
+    text-align: center;
+    border: 1px solid var(--accent-color);
+    z-index: 1;
+    padding: 0.5rem;
+    position: absolute;
+    margin-top: -1rem;
+    background-color: var(--neutral-color);
+}
+
+html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+}
+
+/* Hide scrollbar */
+body::-webkit-scrollbar {
+    width: 0;
 }
