@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="app.css">
+
+    <!--Importing google font "Orbitron"-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap" rel="stylesheet">
+
     <script src="https://unpkg.com/vue@2.7.8/dist/vue.js"></script>
     <script src="https://kit.fontawesome.com/df395f211e.js" crossorigin="anonymous"></script>
     <title>Classly</title>
@@ -18,17 +24,23 @@
                     <h1>Classly</h1>
                 </a>
 
-                <div class="header__searchbox">
-                    <input type="search" placeholder="Search for lesson...">
-                    <i class="fa-solid fa-magnifying-glass"></i>
+                <div class="header__searchBox">
+                    <i class="fa-solid fa-magnifying-glass header__searchIcon"></i>
+                    <input type="text" placeholder="Search for lesson...">
+                    <i class="fa-solid fa-xmark header__searchClearIcon"></i>
                 </div>
 
                 <div class="header__cart">
                     <i class="fa-solid fa-cart-shopping fa-lg"></i>
                     <p>Cart</p>
+                    <span class="header__cartQuantity">0</span>
                 </div>
             </div>
         </header>
+
+        <main>
+            
+        </main>
 
     </div>
     
