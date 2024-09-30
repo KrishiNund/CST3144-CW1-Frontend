@@ -57,17 +57,39 @@
                     <div class="lesson__subject">
                         {{lesson.subject}}
                     </div>
-                    <img :src="lesson.icon" alt="lesson_icon">
-                    <hr>
-                    <h2>{{lesson.subject}}</h2>
-                    <p>{{lesson.location}}</p>
-                    <p>{{lesson.price}}</p>
+
+                    <img :src="lesson.icon" alt="lesson_icon" class="lesson__image">
+
+                    <span>
+                        <p class="lesson__location">{{lesson.location}}</p>
+                        <p class="lesson__price">{{lesson.price}}</p>
+                    </span>
+
+                    <p class="lesson__availability">Available Space: {{lesson.spaces}}</p>
+                    
+
+                    <div class="lesson__quantity">
+                        <div class="lesson__counter">
+                            <i class="fa-solid fa-plus"></i>
+                            <p>0</p>
+                            <i class="fa-solid fa-minus"></i>
+                        </div>
+                        
+                        <button>
+                            <i class="fa-solid fa-cart-plus"></i>
+                        </button>
+                    </div>
+
                 </div>
                 
-
             </div>
 
+
         </main>
+
+        <footer>
+            <small>Classly &copy; 2024. All Rights Reserved.</small>
+        </footer>
 
     </div>
     
