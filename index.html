@@ -13,6 +13,8 @@
 
     <script src="https://unpkg.com/vue@2.7.8/dist/vue.js"></script>
     <script src="https://kit.fontawesome.com/df395f211e.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <title>Classly</title>
 </head>
 <body>
@@ -41,14 +43,55 @@
 
         <main>
 
-            <div class="sorting">
-                <button>
-                    <i class="fa-solid fa-filter"></i>
+            <div class="filterAndSort">
+
+                <div class="filter">
+                    <div class="filter__heading">Filter by:</div>
+
+                    <div>
+                        <input type="radio" id="subject" name="filter" value="subject" v-model="filterOption">
+                        <label for="subject">Subject</label><br>
+                    </div>
+                    
+                    <div>
+                        <input type="radio" id="location" name="filter" value="location" v-model="filterOption">
+                        <label for="location">Location</label><br>
+                    </div>
+                    
+                    <div>
+                        <input type="radio" id="price" name="filter" value="price" v-model="filterOption">
+                        <label for="price">Price</label><br>        
+                    </div>
+                    
+                    <div>
+                        <input type="radio" id="spaces" name="filter" value="spaces" v-model="filterOption">
+                        <label for="spaces">Spaces</label><br>
+                    </div>
+                    
+                </div>
+        
+                
+                <div class="sorting">
+
+                    <div class="sorting__heading">Sort by:</div>
+
+                    <div>
+                        <input type="radio" id="ascending" name="sort" value="ascending" v-model="sortOption">
+                        <label for="ascending">Ascending</label><br>
+                    </div>
+                    
+                    <div>
+                        <input type="radio" id="descending" name="sort" value="descending" v-model="sortOption">
+                        <label for="descending">Descending</label><br>
+                    </div>
+                
+                </div>
+
+                <button class="filterAndSort__confirm" @click="sort">
+                    Confirm
                 </button>
 
-                <button>
-                    <i class="fa-solid fa-sort"></i>
-                </button>
+
             </div>
 
             <div class="lessonContainer">
@@ -62,7 +105,7 @@
 
                     <span>
                         <p class="lesson__location">{{lesson.location}}</p>
-                        <p class="lesson__price">{{lesson.price}}</p>
+                        <p class="lesson__price">${{lesson.price}}</p>
                     </span>
 
                     <p class="lesson__availability">Available Space: {{lesson.spaces}}</p>
