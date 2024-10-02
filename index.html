@@ -103,25 +103,27 @@
 
                     <img :src="lesson.icon" alt="lesson_icon" class="lesson__image">
 
-                    <span>
-                        <p class="lesson__location">{{lesson.location}}</p>
-                        <p class="lesson__price">${{lesson.price}}</p>
-                    </span>
-
-                    <p class="lesson__availability">Available Space: {{lesson.spaces}}</p>
-                    
-
-                    <div class="lesson__quantity">
-                        <div class="lesson__counter">
-                            <i class="fa-solid fa-plus"></i>
-                            <p>0</p>
-                            <i class="fa-solid fa-minus"></i>
+                    <div class="lesson__details">
+                        <div class="lesson__attribute">
+                            <i class="fa-solid fa-location-dot"></i>
+                            <p>{{lesson.location}}</p>
                         </div>
-                        
-                        <button>
-                            <i class="fa-solid fa-cart-plus"></i>
-                        </button>
+
+                        <div class="lesson__attribute">
+                            <i class="fa-solid fa-money-bill"></i>
+                            <p>${{lesson.price}}</p>
+                        </div>
+
+                        <div class="lesson__attribute">
+                            <i class="fa-solid fa-users-line"></i>
+                            <p>{{lesson.spaces}}</p>
+                        </div>
                     </div>
+
+                    <button class="lesson__button">
+                        <i class="fa-solid fa-cart-plus"></i>
+                        <p>Add To Cart</p>
+                    </button>
 
                 </div>
                 

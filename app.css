@@ -205,6 +205,7 @@ main{
     align-items:center;
     height: 25.5rem;
     width: 21rem;
+    /* gap: 1rem; */
 }
 
 .lesson:hover {
@@ -235,68 +236,46 @@ main{
     border-bottom: 1px solid black;
 }
 
-.lesson span{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 12rem;
-    font-size: 1rem;
-    font-style: italic;
-    font-weight: bold;
-    color: var(--secondary-color);
+.lesson__details{
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    grid-template-rows: auto;
+    gap: 3rem;
+    justify-items: center;
+    padding: 0.5rem;
 }
 
-/* .lesson__price{
-    font-size: 1.2rem;
-} */
+.lesson__attribute{
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+    align-items: center;
+}
 
-.lesson__availability{
-    font-size: 0.9rem;
-    background-color: var(--accent-color);
-    color: white;
-    border: 1px solid var(--primary-color);
+.lesson__button{
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    justify-content: center;
+    padding: 0.35rem;
+    border: 1px solid black;
     border-radius: 1rem;
-    padding: 0.5rem;
-    text-align: center;
-    font-style: italic;
+    width: 60%;
+    background-color: var(--secondary-color);
+    color: var(--neutral-color);
+    margin-top: 1rem;
 }
 
-.lesson__quantity{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 9rem;
-}
-
-.lesson__counter{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 1.5rem;
-}
-
-.lesson__counter i{
-    border: 1px solid var(--accent-color);
-    border-radius: 50%;
-    padding: 0.5rem;
-    background-color: white;
-    cursor: pointer;
-}
-
-.lesson__quantity button{
-    border-radius: 50%;
-    padding: 0.5rem;
-    text-align: center;
-    border: 1px solid var(--accent-color);
-    background-color: white;
-    cursor: pointer;
+.lesson__button:hover{
+    background-color: var(--primary-color);
 }
 
 footer{
     bottom: 0;
     text-align: center;
-    background-color: var(--secondary-color);
-    padding: 1rem;
+    font-family: var(--font-primary);
+    background-color: var(--accent-color);
+    padding: 0.8rem;
 }
 
 html {
