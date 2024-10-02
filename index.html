@@ -33,103 +33,154 @@
                     <i class="fa-solid fa-xmark header__searchClearIcon"></i>
                 </div>
 
-                <div class="header__cart">
-                    <i class="fa-solid fa-cart-shopping fa-lg"></i>
+                <div class="header__cart" @click="checkout">
+                    <i class="fa-solid fa-cart-shopping fa-lg" ></i>
                     <p>Cart</p>
-                    <span class="header__cartQuantity">0</span>
+                    <span class="header__cartQuantity">{{numberItemsInCart}}</span>
                 </div>
             </div>
         </header>
 
         <main>
 
-            <div class="filterAndSort">
+            <div v-if="checkoutNotAllowed" class="lessonPage">
+                <div class="filterAndSort">
 
-                <div class="filter">
-                    <div class="filter__heading">Filter by:</div>
-
-                    <div>
-                        <input type="radio" id="subject" name="filter" value="subject" v-model="filterOption">
-                        <label for="subject">Subject</label><br>
+                    <div class="filter">
+                        <div class="filter__heading">Filter by:</div>
+    
+                        <div>
+                            <input type="radio" id="subject" name="filter" value="subject" v-model="filterOption">
+                            <label for="subject">Subject</label><br>
+                        </div>
+                        
+                        <div>
+                            <input type="radio" id="location" name="filter" value="location" v-model="filterOption">
+                            <label for="location">Location</label><br>
+                        </div>
+                        
+                        <div>
+                            <input type="radio" id="price" name="filter" value="price" v-model="filterOption">
+                            <label for="price">Price</label><br>        
+                        </div>
+                        
+                        <div>
+                            <input type="radio" id="spaces" name="filter" value="spaces" v-model="filterOption">
+                            <label for="spaces">Spaces</label><br>
+                        </div>
+                        
                     </div>
+            
                     
-                    <div>
-                        <input type="radio" id="location" name="filter" value="location" v-model="filterOption">
-                        <label for="location">Location</label><br>
+                    <div class="sorting">
+    
+                        <div class="sorting__heading">Sort by:</div>
+    
+                        <div>
+                            <input type="radio" id="ascending" name="sort" value="ascending" v-model="sortOption">
+                            <label for="ascending">Ascending</label><br>
+                        </div>
+                        
+                        <div>
+                            <input type="radio" id="descending" name="sort" value="descending" v-model="sortOption">
+                            <label for="descending">Descending</label><br>
+                        </div>
+                    
                     </div>
-                    
-                    <div>
-                        <input type="radio" id="price" name="filter" value="price" v-model="filterOption">
-                        <label for="price">Price</label><br>        
-                    </div>
-                    
-                    <div>
-                        <input type="radio" id="spaces" name="filter" value="spaces" v-model="filterOption">
-                        <label for="spaces">Spaces</label><br>
+    
+                    <button class="filterAndSort__confirm" @click="sort">
+                        Confirm
+                    </button>
+    
+    
+                </div>
+    
+                <div class="lessonContainer">
+    
+                    <div v-for="lesson in lessons" class="lesson">
+                        <div class="lesson__subject">
+                            {{lesson.subject}}
+                        </div>
+    
+                        <img :src="lesson.icon" alt="lesson_icon" class="lesson__image">
+    
+                        <div class="lesson__details">
+                            <div class="lesson__attribute">
+                                <i class="fa-solid fa-location-dot"></i>
+                                <p>{{lesson.location}}</p>
+                            </div>
+    
+                            <div class="lesson__attribute">
+                                <i class="fa-solid fa-money-bill"></i>
+                                <p>${{lesson.price}}</p>
+                            </div>
+    
+                            <div class="lesson__attribute">
+                                <i class="fa-solid fa-users-line"></i>
+                                <p>{{lesson.spaces}}</p>
+                            </div>
+                        </div>
+    
+                        <button v-if="lesson.spaces > 0" class="lesson__button" @click="addToCart(lesson)">
+                            <i class="fa-solid fa-cart-plus"></i>
+                            <p>Add To Cart</p>
+                        </button>
+    
+                        <button v-else class="lesson__button" disabled>
+                            <i class="fa-solid fa-cart-plus"></i>
+                            <p>Add To Cart</p>
+                        </button>
+    
                     </div>
                     
                 </div>
-        
+
+            </div>
+
+            <div v-else class="cartPage">
                 
-                <div class="sorting">
+                <div class="cart">
+    
+                    <div v-for="lesson in cartArray" class="cart__item">
+                        <div class="lesson__subject">
+                            {{lesson.subject}}
+                        </div>
+    
+                        <img :src="lesson.icon" alt="lesson_icon" class="lesson__image">
+    
+                        <div class="lesson__details">
+                            <div class="lesson__attribute">
+                                <i class="fa-solid fa-location-dot"></i>
+                                <p>{{lesson.location}}</p>
+                            </div>
+    
+                            <div class="lesson__attribute">
+                                <i class="fa-solid fa-money-bill"></i>
+                                <p>${{lesson.price}}</p>
+                            </div>
+    
+                            <div class="lesson__attribute">
+                                <i class="fa-solid fa-users-line"></i>
+                                <p>{{lesson.spaces}}</p>
+                            </div>
+                        </div>
+    
+                        <button class="lesson__button">
+                            <i class="fa-solid fa-trash-can"></i>
+                            <p>Remove</p>
+                        </button>
 
-                    <div class="sorting__heading">Sort by:</div>
-
-                    <div>
-                        <input type="radio" id="ascending" name="sort" value="ascending" v-model="sortOption">
-                        <label for="ascending">Ascending</label><br>
                     </div>
                     
-                    <div>
-                        <input type="radio" id="descending" name="sort" value="descending" v-model="sortOption">
-                        <label for="descending">Descending</label><br>
-                    </div>
-                
                 </div>
 
-                <button class="filterAndSort__confirm" @click="sort">
-                    Confirm
+                <button class="checkoutButton">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                    <p>Checkout</p>
                 </button>
 
-
             </div>
-
-            <div class="lessonContainer">
-
-                <div v-for="lesson in lessons" class="lesson">
-                    <div class="lesson__subject">
-                        {{lesson.subject}}
-                    </div>
-
-                    <img :src="lesson.icon" alt="lesson_icon" class="lesson__image">
-
-                    <div class="lesson__details">
-                        <div class="lesson__attribute">
-                            <i class="fa-solid fa-location-dot"></i>
-                            <p>{{lesson.location}}</p>
-                        </div>
-
-                        <div class="lesson__attribute">
-                            <i class="fa-solid fa-money-bill"></i>
-                            <p>${{lesson.price}}</p>
-                        </div>
-
-                        <div class="lesson__attribute">
-                            <i class="fa-solid fa-users-line"></i>
-                            <p>{{lesson.spaces}}</p>
-                        </div>
-                    </div>
-
-                    <button class="lesson__button">
-                        <i class="fa-solid fa-cart-plus"></i>
-                        <p>Add To Cart</p>
-                    </button>
-
-                </div>
-                
-            </div>
-
-
+        
         </main>
 
         <footer>

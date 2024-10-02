@@ -5,7 +5,11 @@ let app = new Vue({
         searchData:'Hello',
         lessons:[],
         filterOption:'',
-        sortOption:''
+        sortOption:'',
+        cartArray: [],
+        available:true,
+        checkoutNotAllowed:true,
+
     },
     methods:{
         //fetch get
@@ -23,6 +27,7 @@ let app = new Vue({
             })
             .catch(err => console.log("Error fetching lessons: ", err));
         },
+
         sort(){
             let sortedLessons = [...this.lessons];
             if(this.filterOption === '' || this.sortOption === '' ){
@@ -69,11 +74,30 @@ let app = new Vue({
             }
 
             this.lessons = sortedLessons;
+        },
+
+        addToCart(lesson){
+            this.cartArray.push(lesson);
+            let newLessonSpace = lesson.spaces--;
+            console.log(newLessonSpace);
+        },
+
+        checkout(){
+            if(this.cartArray.length > 0){
+                if(this.checkoutNotAllowed == true){
+                    this.checkoutNotAllowed = false;
+                } else {
+                    this.checkoutNotAllowed = true;
+                }
+            } 
         }
+
 
     },
     computed:{
-    
+        numberItemsInCart(){
+            return this.cartArray.length || 0;
+        }
     },
     mounted(){
         this.getLessons();
