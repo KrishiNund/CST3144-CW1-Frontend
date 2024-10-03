@@ -107,11 +107,84 @@ let app = new Vue({
             console.log(this.cartArray);
         },
 
-        // checkout(){
+        updateLesson(){
+
+            let lessonSet = new Set(this.cartArray);
+
+            for (let lesson of lessonSet){
+                updateDetails = {
+                    "subject": lesson.subject,
+                    "value":lesson.spaces,
+                    "attribute": "spaces"
+                };
+
+                fetch('http://localhost:3000/api/updateLesson', {
+                    method:'PUT',
+                    headers:{
+                        'Content-Type':'application/json'
+                    },
+                    body:JSON.stringify(updateDetails)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.message === "Lesson Updated Successfully"){
+                        console.log("Updated");
+                        this.getLessons();
+                        this.cartArray = [];
+                        this.checkoutNotAllowed = true;
+                        
+                    } else {
+                        console.log("Not updated");
+                        this.getLessons();
+                        this.cartArray = [];
+                        this.checkoutNotAllowed = true;
+                    }
+                })
+            }
             
+        },
 
-        // }
+        checkout(){
+            const orderDetails = {
+                "name":this.clientName,
+                "phoneNumber":this.phoneNumber,
+                "order":this.cartArray
+            };
 
+            fetch('http://localhost:3000/api/orders', {
+                method:'POST',
+                headers:{
+                    'Content-Type':'application/json'
+                },
+                body:JSON.stringify(orderDetails)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message === "Order Created Successfully"){
+                    Swal.fire({
+                        title: "Order Successful",
+                        text:"Order has been confirmed!",
+                        icon:"success", 
+                        showCloseButton: true,
+                        willClose: () => {
+                            this.updateLesson();
+                        }
+                    });
+                } else {
+                    Swal.fire({
+                        title: "Order Unsuccessful",
+                        text:"Unfortunately the order could not be placed!",
+                        icon:"error", 
+                        showCloseButton: true,
+                        willClose: () => {
+                            this.cartArray = [];
+                            this.checkoutNotAllowed = true;
+                        }
+                    });
+
+                }
+            })
+        },
 
     },
     computed:{
