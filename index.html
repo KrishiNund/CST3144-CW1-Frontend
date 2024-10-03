@@ -172,10 +172,22 @@
                     
                 </div>
 
-                <button class="checkoutButton">
-                    <i class="fa-solid fa-bag-shopping"></i>
-                    <p>Checkout</p>
-                </button>
+                <div class="checkout">
+                    <div class="checkout__heading">
+                        <p>Guest Checkout</p>
+                    </div>
+
+                    <div class="checkout__details">
+                        <input type="text" placeholder="Enter your name..." v-model="clientName" :class="{green: checkIfLettersOnly, red:!checkIfLettersOnly}">
+                        <input type="text" placeholder="Enter your phone number..." v-model="phoneNumber" :class="{green: checkIfNumbersOnly, red:!checkIfNumbersOnly}">
+                    </div>
+                    
+                    <button class="checkout__button" :disabled="!checkIfLettersOnly || !checkIfNumbersOnly" @click="checkout">
+                        <i class="fa-solid fa-bag-shopping"></i>
+                        <p>Checkout</p>
+                    </button>
+                </div>
+                
 
             </div>
         

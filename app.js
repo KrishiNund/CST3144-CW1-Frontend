@@ -10,6 +10,8 @@ let app = new Vue({
         available:true,
         checkoutNotAllowed:true,
         onLessonPage:true,
+        clientName:'',
+        phoneNumber:''
 
     },
     methods:{
@@ -101,17 +103,32 @@ let app = new Vue({
             if (indexToBeRemoved !== -1){
                 this.cartArray.splice(indexToBeRemoved,1);
             }
-
-            // this.cartArray = this.cartArray.filter(item => item !== lesson);
+            
             console.log(this.cartArray);
-        }
+        },
+
+        // checkout(){
+            
+
+        // }
 
 
     },
     computed:{
         numberItemsInCart(){
             return this.cartArray.length || 0;
-        }
+        },
+
+        checkIfLettersOnly(){
+            let regex = /^[A-Za-z]+$/;
+            return regex.test(this.clientName);
+        },
+
+        checkIfNumbersOnly(){
+            let regex = /^[0-9]+$/;
+            return regex.test(this.phoneNumber);
+        },
+
     },
     mounted(){
         this.getLessons();
