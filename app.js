@@ -9,6 +9,7 @@ let app = new Vue({
         cartArray: [],
         available:true,
         checkoutNotAllowed:true,
+        onLessonPage:true,
 
     },
     methods:{
@@ -82,14 +83,27 @@ let app = new Vue({
             console.log(newLessonSpace);
         },
 
-        checkout(){
-            if(this.cartArray.length > 0){
-                if(this.checkoutNotAllowed == true){
-                    this.checkoutNotAllowed = false;
-                } else {
-                    this.checkoutNotAllowed = true;
-                }
+        goToCheckoutPage(){
+            if(this.cartArray.length > 0 && this.onLessonPage){
+                this.onLessonPage = false;
+                this.checkoutNotAllowed = false;
             } 
+            else if(this.cartArray.length >=0 && this.onLessonPage == false){
+                this.onLessonPage = true;
+                this.checkoutNotAllowed = true;
+            }
+        },
+
+        removeItemFromCart(lesson){
+            let newLessonSpace = lesson.spaces++;
+            let indexToBeRemoved = this.cartArray.findIndex(item => item.subject === lesson.subject && item.spaces === lesson.spaces);
+
+            if (indexToBeRemoved !== -1){
+                this.cartArray.splice(indexToBeRemoved,1);
+            }
+
+            // this.cartArray = this.cartArray.filter(item => item !== lesson);
+            console.log(this.cartArray);
         }
 
 
@@ -101,7 +115,7 @@ let app = new Vue({
     },
     mounted(){
         this.getLessons();
-         //this will fetch lessons when the app loads or reloads
+        //this will fetch lessons when the app loads or reloads
     },
 
 })

@@ -33,7 +33,7 @@
                     <i class="fa-solid fa-xmark header__searchClearIcon"></i>
                 </div>
 
-                <div class="header__cart" @click="checkout">
+                <div class="header__cart" @click="goToCheckoutPage">
                     <i class="fa-solid fa-cart-shopping fa-lg" ></i>
                     <p>Cart</p>
                     <span class="header__cartQuantity">{{numberItemsInCart}}</span>
@@ -67,11 +67,9 @@
                         <div>
                             <input type="radio" id="spaces" name="filter" value="spaces" v-model="filterOption">
                             <label for="spaces">Spaces</label><br>
-                        </div>
-                        
+                        </div>            
                     </div>
             
-                    
                     <div class="sorting">
     
                         <div class="sorting__heading">Sort by:</div>
@@ -165,7 +163,7 @@
                             </div>
                         </div>
     
-                        <button class="lesson__button">
+                        <button class="lesson__button" @click="removeItemFromCart(lesson)">
                             <i class="fa-solid fa-trash-can"></i>
                             <p>Remove</p>
                         </button>
