@@ -11,7 +11,8 @@ let app = new Vue({
         checkoutNotAllowed:true,
         onLessonPage:true,
         clientName:'',
-        phoneNumber:''
+        phoneNumber:'',
+        searchBarQuery:''
 
     },
     methods:{
@@ -185,6 +186,26 @@ let app = new Vue({
                 }
             })
         },
+
+        getFilteredLessons(){
+            //to ensure special characters are handled correctly in URLs
+            const encodedQuery = encodeURIComponent(this.searchBarQuery);
+
+            fetch(`http://localhost:3000/api/search?query=${encodedQuery}`, {
+                method:'GET',
+                headers:{
+                    'Content-Type':'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                this.lessons = data.data;
+                console.log(this.lessons);
+            })
+            .catch(err => console.log("Error fetching lessons: ", err));
+
+            
+        }
 
     },
     computed:{

@@ -29,7 +29,7 @@
 
                 <div class="header__searchBox">
                     <i class="fa-solid fa-magnifying-glass header__searchIcon"></i>
-                    <input type="text" placeholder="Search for lesson...">
+                    <input type="text" placeholder="Search for lesson..." v-model="searchBarQuery" @input="getFilteredLessons">
                     <i class="fa-solid fa-xmark header__searchClearIcon"></i>
                 </div>
 
