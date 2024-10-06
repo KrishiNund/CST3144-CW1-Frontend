@@ -18,7 +18,7 @@ let app = new Vue({
     methods:{
         //fetch get
         getLessons(){
-            fetch('http://localhost:3000/api/lessons', {
+            fetch('https://cst3144-m00934333-cw1-backend.onrender.com/api/lessons', {
                 method:'GET',
                 headers:{
                     'Content-Type':'application/json'
@@ -119,7 +119,7 @@ let app = new Vue({
                     "attribute": "spaces"
                 };
 
-                fetch('http://localhost:3000/api/updateLesson', {
+                fetch('https://cst3144-m00934333-cw1-backend.onrender.com/api/updateLesson', {
                     method:'PUT',
                     headers:{
                         'Content-Type':'application/json'
@@ -152,7 +152,7 @@ let app = new Vue({
                 "order":this.cartArray
             };
 
-            fetch('http://localhost:3000/api/orders', {
+            fetch('https://cst3144-m00934333-cw1-backend.onrender.com/api/orders', {
                 method:'POST',
                 headers:{
                     'Content-Type':'application/json'
@@ -197,7 +197,7 @@ let app = new Vue({
             //to ensure special characters are handled correctly in URLs
             const encodedQuery = encodeURIComponent(this.searchBarQuery);
 
-            fetch(`http://localhost:3000/api/search?query=${encodedQuery}`, {
+            fetch(`https://cst3144-m00934333-cw1-backend.onrender.com/api/search?query=${encodedQuery}`, {
                 method:'GET',
                 headers:{
                     'Content-Type':'application/json'
