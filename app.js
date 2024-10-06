@@ -169,6 +169,9 @@ let app = new Vue({
                         showCloseButton: true,
                         willClose: () => {
                             this.updateLesson();
+                            //reset input fields
+                            this.clientName = '';
+                            this.phoneNumber = '';
                         }
                     });
                 } else {
@@ -180,6 +183,9 @@ let app = new Vue({
                         willClose: () => {
                             this.cartArray = [];
                             this.checkoutNotAllowed = true;
+                            //reset input fields
+                            this.clientName = '';
+                            this.phoneNumber = '';
                         }
                     });
 
@@ -225,8 +231,8 @@ let app = new Vue({
 
     },
     mounted(){
+        //to fetch the lessons when the app loads or reloads
         this.getLessons();
-        //this will fetch lessons when the app loads or reloads
     },
 
 })

@@ -29,8 +29,7 @@
 
                 <div class="header__searchBox">
                     <i class="fa-solid fa-magnifying-glass header__searchIcon"></i>
-                    <input type="text" placeholder="Search for lesson..." v-model="searchBarQuery" @input="getFilteredLessons">
-                    <i class="fa-solid fa-xmark header__searchClearIcon"></i>
+                    <input type="search" placeholder="Search for lesson..." v-model="searchBarQuery" @input="getFilteredLessons">
                 </div>
 
                 <div class="header__cart" @click="goToCheckoutPage">
@@ -100,7 +99,7 @@
                             {{lesson.subject}}
                         </div>
     
-                        <img :src="lesson.icon" alt="lesson_icon" class="lesson__image">
+                        <img :src="lesson.icon" alt="lesson_icon" class="lesson__image" loading="lazy">
     
                         <div class="lesson__details">
                             <div class="lesson__attribute">
@@ -144,7 +143,7 @@
                             {{lesson.subject}}
                         </div>
     
-                        <img :src="lesson.icon" alt="lesson_icon" class="lesson__image">
+                        <img :src="lesson.icon" alt="lesson_icon" class="lesson__image" loading="lazy">
     
                         <div class="lesson__details">
                             <div class="lesson__attribute">
@@ -200,10 +199,6 @@
     </div>
     
     
-    
-
-
-
     <script src="app.js"></script>
 </body>
 </html>

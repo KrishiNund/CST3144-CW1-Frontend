@@ -2,13 +2,12 @@
     /*Colors being used*/
     --primary-color: #1b263b;
     --secondary-color: #415a77;
-    --neutral-color: #FAFAFF; /*#e0e1dd*/
+    --neutral-color: white; /*#e0e1dd  #FAFAFF*/
     --accent-color:#778DA9;
     --hover-color:#1B263B;
 
     /*Fonts being used*/
     --font-primary:'Orbitron', sans-serif;
-    /* --font-heading:'Orbitron', sans-serif; */
     --font-secondary:'Roboto', sans-serif;  
 }
 
@@ -85,11 +84,6 @@ header{
     color: var(--secondary-color);
 }  
 
-.header__searchBox input:focus + .header__searchClearIcon{
-    display: inline-block;
-}
-
-
 .header__cart{
     position: relative;
     display: flex;
@@ -131,8 +125,7 @@ header{
 .filterAndSort{
     display: flex;
     flex-direction: column;
-    align-items: center;
-    /* border: 1px solid var(--accent-color); */
+    align-items: center; 
     width: 20rem;
     height: 30rem;
     border-radius: 1rem;
@@ -189,7 +182,7 @@ header{
 
 .lessonContainer{
     display: grid;
-    grid-template-columns: repeat(3,1fr);
+    grid-template-columns: repeat(4,1fr);
     grid-template-rows: auto;
     gap: 2.5rem;
     justify-items: center;
@@ -206,7 +199,6 @@ header{
     align-items:center;
     height: 25.5rem;
     width: 21rem;
-    /* gap: 1rem; */
 }
 
 .lesson:hover {
@@ -231,7 +223,7 @@ header{
 .lesson__image{
     width: 100%;
     height: 15em;
-    object-fit: cover;
+    object-fit: contain;
     border-top-left-radius: inherit;
     border-top-right-radius: inherit;
     border-bottom: 1px solid black;
@@ -283,8 +275,6 @@ header{
     padding: 2rem;
     gap: 1.5rem;
     margin-top: 1rem;
-    /* align-items: center; */
-    /* justify-content: center; */
 }
 
 
@@ -307,7 +297,6 @@ header{
     align-items:center;
     height: 25.5rem;
     width: 21rem;
-    /* gap: 1rem; */
 }
 
 .cart__item:hover {
