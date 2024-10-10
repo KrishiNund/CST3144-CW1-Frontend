@@ -7,6 +7,7 @@ let app = new Vue({
         filterOption:'',
         sortOption:'',
         cartArray: [],
+        filteredLessons: [],
         available:true,
         checkoutNotAllowed:true,
         onLessonPage:true,
@@ -16,9 +17,12 @@ let app = new Vue({
 
     },
     methods:{
+
+        //render.com link for backend: https://cst3144-m00934333-cw1-backend.onrender.com
+        //link for localhost: http://localhost:3000/
         //fetch get
         getLessons(){
-            fetch('https://cst3144-m00934333-cw1-backend.onrender.com/api/lessons', {
+            fetch('http://localhost:3000/api/lessons', {
                 method:'GET',
                 headers:{
                     'Content-Type':'application/json'
@@ -119,7 +123,7 @@ let app = new Vue({
                     "attribute": "spaces"
                 };
 
-                fetch('https://cst3144-m00934333-cw1-backend.onrender.com/api/updateLesson', {
+                fetch('http://localhost:3000/updateLesson', {
                     method:'PUT',
                     headers:{
                         'Content-Type':'application/json'
@@ -152,7 +156,7 @@ let app = new Vue({
                 "order":this.cartArray
             };
 
-            fetch('https://cst3144-m00934333-cw1-backend.onrender.com/api/orders', {
+            fetch('http://localhost:3000/api/orders', {
                 method:'POST',
                 headers:{
                     'Content-Type':'application/json'
@@ -197,7 +201,7 @@ let app = new Vue({
             //to ensure special characters are handled correctly in URLs
             const encodedQuery = encodeURIComponent(this.searchBarQuery);
 
-            fetch(`https://cst3144-m00934333-cw1-backend.onrender.com/api/search?query=${encodedQuery}`, {
+            fetch(`http://localhost:3000/api/search?query=${encodedQuery}`, {
                 method:'GET',
                 headers:{
                     'Content-Type':'application/json'
@@ -205,12 +209,20 @@ let app = new Vue({
             })
             .then(response => response.json())
             .then(data => {
-                this.lessons = data.data;
+                this.filteredLessons = data.data;
+                console
+                for (let filteredLesson of this.filteredLessons){
+                    for (let cartLesson of this.cartArray){
+                        if(filteredLesson.subject === cartLesson.subject){
+                            // console.log(filteredLesson.spaces, cartLesson.spaces);
+                            filteredLesson.spaces = cartLesson.spaces;
+                        }
+                    }
+                }
+                this.lessons = this.filteredLessons;
                 console.log(this.lessons);
             })
             .catch(err => console.log("Error fetching lessons: ", err));
-
-            
         }
 
     },

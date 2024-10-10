@@ -27,10 +27,15 @@
                     <h1>Classly</h1>
                 </a>
 
-                <div class="header__searchBox">
+                <div class="header__searchBox" >
                     <i class="fa-solid fa-magnifying-glass header__searchIcon"></i>
                     <input type="search" placeholder="Search for lesson..." v-model="searchBarQuery" @input="getFilteredLessons">
                 </div>
+
+                <!-- <div v-else class="header__searchBox">
+                    <i class="fa-solid fa-magnifying-glass header__searchIcon"></i>
+                    <input type="search" placeholder="Search for lesson..." v-model="searchBarQuery" @input="getFilteredLessons" disabled>
+                </div> -->
 
                 <div class="header__cart" @click="goToCheckoutPage">
                     <i class="fa-solid fa-cart-shopping fa-lg" ></i>
