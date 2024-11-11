@@ -186,7 +186,7 @@
                         <input type="text" placeholder="Enter your phone number..." v-model="phoneNumber" :class="{green: checkIfNumbersOnly, red:!checkIfNumbersOnly}">
                     </div>
                     
-                    <button class="checkout__button" :disabled="!checkIfLettersOnly || !checkIfNumbersOnly" @click="checkout">
+                    <button class="checkout__button" :disabled="!checkIfLettersOnly || !checkIfNumbersOnly" @click="confirmCheckout">
                         <i class="fa-solid fa-bag-shopping"></i>
                         <p>Checkout</p>
                     </button>

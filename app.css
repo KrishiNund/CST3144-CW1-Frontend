@@ -182,7 +182,7 @@ header{
 
 .lessonContainer{
     display: grid;
-    grid-template-columns: repeat(4,1fr);
+    grid-template-columns: repeat(3,1fr);
     grid-template-rows: auto;
     gap: 2.5rem;
     justify-items: center;
@@ -371,11 +371,13 @@ header{
 }
 
 footer{
+    position: fixed;
     bottom: 0;
+    width: 100%;
     text-align: center;
     font-family: var(--font-primary);
     background-color: var(--accent-color);
-    padding: 0.8rem;
+    padding: 0.2rem;
 }
 
 html {

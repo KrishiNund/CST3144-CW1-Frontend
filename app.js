@@ -98,6 +98,8 @@ let app = new Vue({
             else if(this.cartArray.length >=0 && this.onLessonPage == false){
                 this.onLessonPage = true;
                 this.checkoutNotAllowed = true;
+                this.clientName = '';
+                this.phoneNumber = '';
             }
         },
 
@@ -123,7 +125,7 @@ let app = new Vue({
                     "attribute": "spaces"
                 };
 
-                fetch('http://localhost:3000/updateLesson', {
+                fetch('http://localhost:3000/api/updateLesson', {
                     method:'PUT',
                     headers:{
                         'Content-Type':'application/json'
@@ -147,6 +149,32 @@ let app = new Vue({
                 })
             }
             
+        },
+
+        confirmCheckout(){
+            const lessonCount = this.cartArray.reduce((acc,item) => {
+                acc[item.subject] = (acc[item.subject] || 0) + 1;
+                return acc;
+            }, {});
+
+            console.log(lessonCount);
+
+            const lessonText = Object.entries(lessonCount)
+                .map(([subject, count]) => `${subject}: ${count}`)
+                .join("<br>");  // Join each entry with a newline
+
+            Swal.fire({
+                title: "Your Order",
+                html:lessonText,
+                icon:"question", 
+                showCloseButton: false,
+                showCancelButton: true,
+                confirmButtonText: "Confirm"
+            }).then((result) => {
+                if (result.isConfirmed){
+                    this.checkout();
+                }
+            });
         },
 
         checkout(){
