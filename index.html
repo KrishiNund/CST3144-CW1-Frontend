@@ -104,7 +104,7 @@
                             {{lesson.subject}}
                         </div>
     
-                        <img :src="lesson.icon" alt="lesson_icon" class="lesson__image" loading="lazy">
+                        <img :src="`http://localhost:3000/images/${lesson.icon}`" alt="lesson_icon" class="lesson__image" loading="lazy">
     
                         <div class="lesson__details">
                             <div class="lesson__attribute">
