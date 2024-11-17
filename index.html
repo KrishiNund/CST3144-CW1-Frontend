@@ -47,6 +47,7 @@
 
         <main>
 
+            <!--show lesson page if CheckoutNotAllowed is true-->
             <div v-if="checkoutNotAllowed" class="lessonPage">
                 <div class="filterAndSort">
 
@@ -104,7 +105,7 @@
                             {{lesson.subject}}
                         </div>
     
-                        <img :src="`http://localhost:3000/images/${lesson.icon}`" alt="lesson_icon" class="lesson__image" loading="lazy">
+                        <img :src="`https://cst3144-m00934333-cw1-backend.onrender.com/images/${lesson.icon}`" alt="lesson_icon" class="lesson__image" loading="lazy">
     
                         <div class="lesson__details">
                             <div class="lesson__attribute">
@@ -139,6 +140,7 @@
 
             </div>
 
+            <!--else if CheckNotAllowed is false, show cart Page-->
             <div v-else class="cartPage">
                 
                 <div class="cart">
@@ -148,7 +150,7 @@
                             {{lesson.subject}}
                         </div>
     
-                        <img :src="lesson.icon" alt="lesson_icon" class="lesson__image" loading="lazy">
+                        <img :src="`https://cst3144-m00934333-cw1-backend.onrender.com/images/${lesson.icon}`" alt="lesson_icon" class="lesson__image" loading="lazy">
     
                         <div class="lesson__details">
                             <div class="lesson__attribute">

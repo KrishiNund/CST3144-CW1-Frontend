@@ -1,28 +1,28 @@
+//* initializing Vue instance to manage app state and behaviors
 let app = new Vue({
     el:'#app',
     data:{
-        logo:"images/logo.png",
-        searchData:'Hello',
-        lessons:[],
-        filterOption:'',
-        sortOption:'',
-        cartArray: [],
-        filteredLessons: [],
-        available:true,
-        checkoutNotAllowed:true,
-        onLessonPage:true,
-        clientName:'',
-        phoneNumber:'',
-        searchBarQuery:''
+        logo:"images/logo.png", //path to website's logo
+        lessons:[],             //array to store the lessons
+        filterOption:'',        //contains the filter option (subject, price, etc) chosen
+        sortOption:'',          //contains the sort option (asc or desc) chosen
+        cartArray: [],          //array to store the lessons added to the cart
+        filteredLessons: [],    //array to contains the lessons that match the query//
+        checkoutNotAllowed:true, //boolean variable that returns whether checkout page can be accessed or not
+        onLessonPage:true,       //boolean variable that returns whether user is currently on lesson page or not
+        clientName:'',           //stores client's name
+        phoneNumber:'',          //stores client's phone number
+        searchBarQuery:''        //stores search bar input
 
     },
     methods:{
 
         //render.com link for backend: https://cst3144-m00934333-cw1-backend.onrender.com
         //link for localhost: http://localhost:3000/
-        //fetch get
+    
+        //* fetches all lessons from the backend and updates lessons array with the fetched data
         getLessons(){
-            fetch('http://localhost:3000/api/lessons', {
+            fetch('https://cst3144-m00934333-cw1-backend.onrender.com/api/lessons', {
                 method:'GET',
                 headers:{
                     'Content-Type':'application/json'
@@ -36,16 +36,21 @@ let app = new Vue({
             .catch(err => console.log("Error fetching lessons: ", err));
         },
 
+        //* sorts the lessons in terms of their attributes and in ascending and descending orders
         sort(){
+            //* creates a copy of the original lessons array
             let sortedLessons = [...this.lessons];
+            //* if either filter or sort option is not selected, return an error box
             if(this.filterOption === '' || this.sortOption === '' ){
                 Swal.fire({
                     title: 'Error',
                     text: 'You have to choose both a filter and sort option before confirming!',
                     icon: 'error'
                 });
+
             } else if(this.filterOption === "subject"){
 
+                //* localeCompare used for sorting due to being case insensitive and language sensitive
                 sortedLessons.sort((a,b) => {
                     if (this.sortOption === "ascending"){
                         return a.subject.localeCompare(b.subject);
@@ -66,17 +71,17 @@ let app = new Vue({
             } else if(this.filterOption === "price"){
                 sortedLessons.sort((a,b) => {
                     if(this.sortOption === "ascending"){
-                        return a.price - b.price; //ascending
+                        return a.price - b.price; 
                     } else {
-                        return b.price - a.price; //descending
+                        return b.price - a.price; 
                     }
                 })
             } else if(this.filterOption === "spaces"){
                 sortedLessons.sort((a,b) => {
                     if(this.sortOption === "ascending"){
-                        return a.spaces - b.spaces; //ascending
+                        return a.spaces - b.spaces; 
                     } else {
-                        return b.spaces - a.spaces; //descending
+                        return b.spaces - a.spaces;
                     }
                 })
             }
@@ -84,12 +89,14 @@ let app = new Vue({
             this.lessons = sortedLessons;
         },
 
+        //* adds lesson to cart and updates lesson spaces visually
         addToCart(lesson){
             this.cartArray.push(lesson);
             let newLessonSpace = lesson.spaces--;
             console.log(newLessonSpace);
         },
 
+        //* directs to checkout page if user is on lesson page and cart is not empty
         goToCheckoutPage(){
             if(this.cartArray.length > 0 && this.onLessonPage){
                 this.onLessonPage = false;
@@ -102,11 +109,14 @@ let app = new Vue({
                 this.phoneNumber = '';
             }
         },
-
+        
+        //* removes lesson from cart and updates lesson spaces visually
         removeItemFromCart(lesson){
             let newLessonSpace = lesson.spaces++;
             let indexToBeRemoved = this.cartArray.findIndex(item => item.subject === lesson.subject && item.spaces === lesson.spaces);
 
+            /* checks if there is a match, if yes, findIndex will return the index of 
+            the match else it will return -1 */
             if (indexToBeRemoved !== -1){
                 this.cartArray.splice(indexToBeRemoved,1);
             }
@@ -114,6 +124,8 @@ let app = new Vue({
             console.log(this.cartArray);
         },
 
+        /* updates a lesson's attributes and sends those changed 
+        attributes back to the backend where those changes will be set in the database*/
         updateLesson(){
 
             let lessonSet = new Set(this.cartArray);
@@ -125,7 +137,7 @@ let app = new Vue({
                     "attribute": "spaces"
                 };
 
-                fetch('http://localhost:3000/api/updateLesson', {
+                fetch('https://cst3144-m00934333-cw1-backend.onrender.com/api/updateLesson', {
                     method:'PUT',
                     headers:{
                         'Content-Type':'application/json'
@@ -135,7 +147,7 @@ let app = new Vue({
                 .then(response => response.json())
                 .then(data => {
                     if (data.message === "Lesson Updated Successfully"){
-                        console.log("Updated");
+                        //console.log("Updated");
                         this.getLessons();
                         this.cartArray = [];
                         this.checkoutNotAllowed = true;
@@ -150,15 +162,27 @@ let app = new Vue({
             }
             
         },
-
+        
+        /*provides user with a list of the lessons added to cart before checkout
+        and also shows a pop up for the user to confirm whether they 
+        want to proceed with the checkout or not*/
         confirmCheckout(){
+            /*creates a lessonCount object that keeps keeps track of the number of occurrences
+            of an item in the cartArray*/
+            //* acc is the accumulator object that stores the count of each lesson
+            //* item is the current lesson being processed
             const lessonCount = this.cartArray.reduce((acc,item) => {
+
+                //*checks if item.subject already exists as a key in acc
+                //*if it exists, adds 1 to the lesson count, if not then it initializes 
+                //*the count at 0 and then adds 1
                 acc[item.subject] = (acc[item.subject] || 0) + 1;
                 return acc;
             }, {});
 
             console.log(lessonCount);
-
+            
+            //* converts the lessonCount object into an array of key-pair values
             const lessonText = Object.entries(lessonCount)
                 .map(([subject, count]) => `${subject}: ${count}`)
                 .join("<br>");  // Join each entry with a newline
@@ -176,7 +200,9 @@ let app = new Vue({
                 }
             });
         },
-
+        
+        /*gets customer order details and sends them to the 
+        backend where they are stored in the database*/
         checkout(){
             const orderDetails = {
                 "name":this.clientName,
@@ -184,7 +210,7 @@ let app = new Vue({
                 "order":this.cartArray
             };
 
-            fetch('http://localhost:3000/api/orders', {
+            fetch('https://cst3144-m00934333-cw1-backend.onrender.com/api/orders', {
                 method:'POST',
                 headers:{
                     'Content-Type':'application/json'
@@ -201,7 +227,7 @@ let app = new Vue({
                         showCloseButton: true,
                         willClose: () => {
                             this.updateLesson();
-                            //reset input fields
+                            //*reset input fields
                             this.clientName = '';
                             this.phoneNumber = '';
                         }
@@ -215,7 +241,7 @@ let app = new Vue({
                         willClose: () => {
                             this.cartArray = [];
                             this.checkoutNotAllowed = true;
-                            //reset input fields
+                            //*reset input fields
                             this.clientName = '';
                             this.phoneNumber = '';
                         }
@@ -225,11 +251,12 @@ let app = new Vue({
             })
         },
 
+        /*retrives filtered lessons according to the data input in the search bar*/
         getFilteredLessons(){
-            //to ensure special characters are handled correctly in URLs
+            //* to ensure special characters are handled correctly in URLs
             const encodedQuery = encodeURIComponent(this.searchBarQuery);
 
-            fetch(`http://localhost:3000/api/search?query=${encodedQuery}`, {
+            fetch(`https://cst3144-m00934333-cw1-backend.onrender.com/api/search?query=${encodedQuery}`, {
                 method:'GET',
                 headers:{
                     'Content-Type':'application/json'
@@ -255,15 +282,18 @@ let app = new Vue({
 
     },
     computed:{
+        //? returns the number of items in the cart
         numberItemsInCart(){
             return this.cartArray.length || 0;
         },
 
+        //? checks if the name entered consists of letter only
         checkIfLettersOnly(){
             let regex = /^[A-Za-z]+$/;
             return regex.test(this.clientName);
         },
-
+        
+        //? checks if the phone number entered consists of digits only
         checkIfNumbersOnly(){
             let regex = /^[0-9]+$/;
             return regex.test(this.phoneNumber);
@@ -271,7 +301,7 @@ let app = new Vue({
 
     },
     mounted(){
-        //to fetch the lessons when the app loads or reloads
+        //? fetches the lessons when the app loads or reloads
         this.getLessons();
     },
 
