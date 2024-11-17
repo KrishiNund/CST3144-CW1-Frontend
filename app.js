@@ -2,7 +2,6 @@
 let app = new Vue({
     el:'#app',
     data:{
-        logo:"images/logo.png", //path to website's logo
         lessons:[],             //array to store the lessons
         filterOption:'',        //contains the filter option (subject, price, etc) chosen
         sortOption:'',          //contains the sort option (asc or desc) chosen
