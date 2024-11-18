@@ -1,211 +1,264 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="app.css">
-    <link rel="icon" type="image/x-icon" href="https://cst3144-m00934333-cw1-backend.onrender.com/images/logo.png">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="app.css" />
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="https://cst3144-m00934333-cw1-backend.onrender.com/images/logo.png"
+    />
 
     <!--Importing google font "Orbitron"-->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap"
+      rel="stylesheet"
+    />
 
     <script src="https://unpkg.com/vue@2.7.8/dist/vue.js"></script>
-    <script src="https://kit.fontawesome.com/df395f211e.js" crossorigin="anonymous"></script>
+    <script
+      src="https://kit.fontawesome.com/df395f211e.js"
+      crossorigin="anonymous"
+    ></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <title>Classly</title>
-</head>
-<body>
+  </head>
+  <body>
     <div id="app">
+      <header>
+        <div class="header__container">
+          <a href="/CST3144-M00934333-CW1-Frontend/" class="header__logo">
+            <i class="fa-solid fa-graduation-cap fa-xl"></i>
+            <h1>Classly</h1>
+          </a>
 
-        <header>
-            <div class="header__container">
-                <a href="/CST3144-M00934333-CW1-Frontend/" class="header__logo">
-                    <i class="fa-solid fa-graduation-cap fa-xl"></i>
-                    <h1>Classly</h1>
-                </a>
+          <div class="header__searchBox">
+            <i class="fa-solid fa-magnifying-glass header__searchIcon"></i>
+            <input
+              type="search"
+              placeholder="Search for lesson..."
+              v-model="searchBarQuery"
+              @input="getFilteredLessons"
+            />
+          </div>
 
-                <div class="header__searchBox" >
-                    <i class="fa-solid fa-magnifying-glass header__searchIcon"></i>
-                    <input type="search" placeholder="Search for lesson..." v-model="searchBarQuery" @input="getFilteredLessons">
-                </div>
+          <div class="header__cart" @click="goToCheckoutPage">
+            <i class="fa-solid fa-cart-shopping fa-lg"></i>
+            <p>Cart</p>
+            <span class="header__cartQuantity">{{numberItemsInCart}}</span>
+          </div>
+        </div>
+      </header>
 
-                <!-- <div v-else class="header__searchBox">
-                    <i class="fa-solid fa-magnifying-glass header__searchIcon"></i>
-                    <input type="search" placeholder="Search for lesson..." v-model="searchBarQuery" @input="getFilteredLessons" disabled>
-                </div> -->
+      <main>
+        <!--show lesson page if CheckoutNotAllowed is true-->
+        <div v-if="checkoutNotAllowed" class="lessonPage">
+          <div class="filterAndSort">
+            <div class="filter">
+              <div class="filter__heading">Filter by:</div>
 
-                <div class="header__cart" @click="goToCheckoutPage">
-                    <i class="fa-solid fa-cart-shopping fa-lg" ></i>
-                    <p>Cart</p>
-                    <span class="header__cartQuantity">{{numberItemsInCart}}</span>
-                </div>
-            </div>
-        </header>
+              <div>
+                <input
+                  type="radio"
+                  id="subject"
+                  name="filter"
+                  value="subject"
+                  v-model="filterOption"
+                />
+                <label for="subject">Subject</label><br />
+              </div>
 
-        <main>
+              <div>
+                <input
+                  type="radio"
+                  id="location"
+                  name="filter"
+                  value="location"
+                  v-model="filterOption"
+                />
+                <label for="location">Location</label><br />
+              </div>
 
-            <!--show lesson page if CheckoutNotAllowed is true-->
-            <div v-if="checkoutNotAllowed" class="lessonPage">
-                <div class="filterAndSort">
+              <div>
+                <input
+                  type="radio"
+                  id="price"
+                  name="filter"
+                  value="price"
+                  v-model="filterOption"
+                />
+                <label for="price">Price</label><br />
+              </div>
 
-                    <div class="filter">
-                        <div class="filter__heading">Filter by:</div>
-    
-                        <div>
-                            <input type="radio" id="subject" name="filter" value="subject" v-model="filterOption">
-                            <label for="subject">Subject</label><br>
-                        </div>
-                        
-                        <div>
-                            <input type="radio" id="location" name="filter" value="location" v-model="filterOption">
-                            <label for="location">Location</label><br>
-                        </div>
-                        
-                        <div>
-                            <input type="radio" id="price" name="filter" value="price" v-model="filterOption">
-                            <label for="price">Price</label><br>        
-                        </div>
-                        
-                        <div>
-                            <input type="radio" id="spaces" name="filter" value="spaces" v-model="filterOption">
-                            <label for="spaces">Spaces</label><br>
-                        </div>            
-                    </div>
-            
-                    <div class="sorting">
-    
-                        <div class="sorting__heading">Sort by:</div>
-    
-                        <div>
-                            <input type="radio" id="ascending" name="sort" value="ascending" v-model="sortOption">
-                            <label for="ascending">Ascending</label><br>
-                        </div>
-                        
-                        <div>
-                            <input type="radio" id="descending" name="sort" value="descending" v-model="sortOption">
-                            <label for="descending">Descending</label><br>
-                        </div>
-                    
-                    </div>
-    
-                    <button class="filterAndSort__confirm" @click="sort">
-                        Confirm
-                    </button>
-    
-    
-                </div>
-    
-                <div class="lessonContainer">
-    
-                    <div v-for="lesson in lessons" class="lesson">
-                        <div class="lesson__subject">
-                            {{lesson.subject}}
-                        </div>
-    
-                        <img :src="`https://cst3144-m00934333-cw1-backend.onrender.com/images/${lesson.icon}`" alt="lesson_icon" class="lesson__image" loading="lazy">
-    
-                        <div class="lesson__details">
-                            <div class="lesson__attribute">
-                                <i class="fa-solid fa-location-dot"></i>
-                                <p>{{lesson.location}}</p>
-                            </div>
-    
-                            <div class="lesson__attribute">
-                                <i class="fa-solid fa-money-bill"></i>
-                                <p>${{lesson.price}}</p>
-                            </div>
-    
-                            <div class="lesson__attribute">
-                                <i class="fa-solid fa-users-line"></i>
-                                <p>{{lesson.spaces}}</p>
-                            </div>
-                        </div>
-    
-                        <button v-if="lesson.spaces > 0" class="lesson__button" @click="addToCart(lesson)">
-                            <i class="fa-solid fa-cart-plus"></i>
-                            <p>Add To Cart</p>
-                        </button>
-    
-                        <button v-else class="lesson__button" disabled>
-                            <i class="fa-solid fa-cart-plus"></i>
-                            <p>Add To Cart</p>
-                        </button>
-    
-                    </div>
-                    
-                </div>
-
+              <div>
+                <input
+                  type="radio"
+                  id="spaces"
+                  name="filter"
+                  value="spaces"
+                  v-model="filterOption"
+                />
+                <label for="spaces">Spaces</label><br />
+              </div>
             </div>
 
-            <!--else if CheckNotAllowed is false, show cart Page-->
-            <div v-else class="cartPage">
-                
-                <div class="cart">
-    
-                    <div v-for="lesson in cartArray" class="cart__item">
-                        <div class="lesson__subject">
-                            {{lesson.subject}}
-                        </div>
-    
-                        <img :src="`https://cst3144-m00934333-cw1-backend.onrender.com/images/${lesson.icon}`" alt="lesson_icon" class="lesson__image" loading="lazy">
-    
-                        <div class="lesson__details">
-                            <div class="lesson__attribute">
-                                <i class="fa-solid fa-location-dot"></i>
-                                <p>{{lesson.location}}</p>
-                            </div>
-    
-                            <div class="lesson__attribute">
-                                <i class="fa-solid fa-money-bill"></i>
-                                <p>${{lesson.price}}</p>
-                            </div>
-    
-                            <div class="lesson__attribute">
-                                <i class="fa-solid fa-users-line"></i>
-                                <p>{{lesson.spaces}}</p>
-                            </div>
-                        </div>
-    
-                        <button class="lesson__button" @click="removeItemFromCart(lesson)">
-                            <i class="fa-solid fa-trash-can"></i>
-                            <p>Remove</p>
-                        </button>
+            <div class="sorting">
+              <div class="sorting__heading">Sort by:</div>
 
-                    </div>
-                    
-                </div>
+              <div>
+                <input
+                  type="radio"
+                  id="ascending"
+                  name="sort"
+                  value="ascending"
+                  v-model="sortOption"
+                />
+                <label for="ascending">Ascending</label><br />
+              </div>
 
-                <div class="checkout">
-                    <div class="checkout__heading">
-                        <p>Guest Checkout</p>
-                    </div>
-
-                    <div class="checkout__details">
-                        <input type="text" placeholder="Enter your name..." v-model="clientName" :class="{green: checkIfLettersOnly, red:!checkIfLettersOnly}">
-                        <input type="text" placeholder="Enter your phone number..." v-model="phoneNumber" :class="{green: checkIfNumbersOnly, red:!checkIfNumbersOnly}">
-                    </div>
-                    
-                    <button class="checkout__button" :disabled="!checkIfLettersOnly || !checkIfNumbersOnly" @click="confirmCheckout">
-                        <i class="fa-solid fa-bag-shopping"></i>
-                        <p>Checkout</p>
-                    </button>
-                </div>
-                
-
+              <div>
+                <input
+                  type="radio"
+                  id="descending"
+                  name="sort"
+                  value="descending"
+                  v-model="sortOption"
+                />
+                <label for="descending">Descending</label><br />
+              </div>
             </div>
-        
-        </main>
 
-        <footer>
-            <small>Classly &copy; 2024. All Rights Reserved.</small>
-        </footer>
+            <button class="filterAndSort__confirm" @click="sort">
+              Confirm
+            </button>
+          </div>
 
+          <div class="lessonContainer">
+            <div v-for="lesson in lessons" class="lesson">
+              <div class="lesson__subject">{{lesson.subject}}</div>
+
+              <img
+                :src="`https://cst3144-m00934333-cw1-backend.onrender.com/images/${lesson.icon}`"
+                alt="lesson_icon"
+                class="lesson__image"
+                loading="lazy"
+              />
+
+              <div class="lesson__details">
+                <div class="lesson__attribute">
+                  <i class="fa-solid fa-location-dot"></i>
+                  <p>{{lesson.location}}</p>
+                </div>
+
+                <div class="lesson__attribute">
+                  <i class="fa-solid fa-money-bill"></i>
+                  <p>${{lesson.price}}</p>
+                </div>
+
+                <div class="lesson__attribute">
+                  <i class="fa-solid fa-users-line"></i>
+                  <p>{{lesson.spaces}}</p>
+                </div>
+              </div>
+
+              <button
+                v-if="lesson.spaces > 0"
+                class="lesson__button"
+                @click="addToCart(lesson)"
+              >
+                <i class="fa-solid fa-cart-plus"></i>
+                <p>Add To Cart</p>
+              </button>
+
+              <button v-else class="lesson__button" disabled>
+                <i class="fa-solid fa-cart-plus"></i>
+                <p>Add To Cart</p>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!--else if CheckNotAllowed is false, show cart Page-->
+        <div v-else class="cartPage">
+          <div class="cart">
+            <div v-for="lesson in cartArray" class="cart__item">
+              <div class="lesson__subject">{{lesson.subject}}</div>
+
+              <img
+                :src="`https://cst3144-m00934333-cw1-backend.onrender.com/images/${lesson.icon}`"
+                alt="lesson_icon"
+                class="lesson__image"
+                loading="lazy"
+              />
+
+              <div class="lesson__details">
+                <div class="lesson__attribute">
+                  <i class="fa-solid fa-location-dot"></i>
+                  <p>{{lesson.location}}</p>
+                </div>
+
+                <div class="lesson__attribute">
+                  <i class="fa-solid fa-money-bill"></i>
+                  <p>${{lesson.price}}</p>
+                </div>
+
+                <div class="lesson__attribute">
+                  <i class="fa-solid fa-users-line"></i>
+                  <p>{{lesson.spaces}}</p>
+                </div>
+              </div>
+
+              <button
+                class="lesson__button"
+                @click="removeItemFromCart(lesson)"
+              >
+                <i class="fa-solid fa-trash-can"></i>
+                <p>Remove</p>
+              </button>
+            </div>
+          </div>
+
+          <div class="checkout">
+            <div class="checkout__heading">
+              <p>Guest Checkout</p>
+            </div>
+
+            <div class="checkout__details">
+              <input
+                type="text"
+                placeholder="Enter your name..."
+                v-model="clientName"
+                :class="{green: checkIfLettersOnly, red:!checkIfLettersOnly}"
+              />
+              <input
+                type="text"
+                placeholder="Enter your phone number..."
+                v-model="phoneNumber"
+                :class="{green: checkIfNumbersOnly, red:!checkIfNumbersOnly}"
+              />
+            </div>
+
+            <button
+              class="checkout__button"
+              :disabled="!checkIfLettersOnly || !checkIfNumbersOnly"
+              @click="confirmCheckout"
+            >
+              <i class="fa-solid fa-bag-shopping"></i>
+              <p>Checkout</p>
+            </button>
+          </div>
+        </div>
+      </main>
+
+      <footer>
+        <small>Classly &copy; 2024. All Rights Reserved.</small>
+      </footer>
     </div>
-    
-    
+
     <script src="app.js"></script>
-</body>
+  </body>
 </html>
