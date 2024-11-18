@@ -244,7 +244,7 @@
 
             <button
               class="checkout__button"
-              :disabled="!checkIfLettersOnly || !checkIfNumbersOnly"
+              :disabled="!checkIfLettersOnly || !checkIfNumbersOnly || cartArray.length === 0"
               @click="confirmCheckout"
             >
               <i class="fa-solid fa-bag-shopping"></i>
