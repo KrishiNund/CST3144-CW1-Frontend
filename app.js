@@ -42,7 +42,7 @@ let app = new Vue({
           icon: "error",
         });
       } else if (this.filterOption === "subject") {
-        //* localeCompare used for sorting due to being case insensitive and language sensitive
+        //* localeCompare used for sorting due to being case insensitive and being able to sort strings with numbers in them
         sortedLessons.sort((a, b) => {
           if (this.sortOption === "ascending") {
             return a.subject.localeCompare(b.subject);
@@ -53,9 +53,9 @@ let app = new Vue({
       } else if (this.filterOption === "location") {
         sortedLessons.sort((a, b) => {
           if (this.sortOption === "ascending") {
-            return a.location.localeCompare(b.location);
+            return a.location.localeCompare(b.location, undefined, {numeric:true});
           } else {
-            return b.location.localeCompare(a.location);
+            return b.location.localeCompare(a.location, undefined, {numeric:true});
           }
         });
       } else if (this.filterOption === "price") {
