@@ -43,6 +43,7 @@
               placeholder="Search for lesson..."
               v-model="searchBarQuery"
               @input="getFilteredLessons"
+              :disabled="onLessonPage === false"
             />
           </div>
 

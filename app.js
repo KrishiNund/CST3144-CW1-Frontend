@@ -6,7 +6,7 @@ let app = new Vue({
     filterOption: "", //contains the filter option (subject, price, etc) chosen
     sortOption: "", //contains the sort option (asc or desc) chosen
     cartArray: [], //array to store the lessons added to the cart
-    filteredLessons: [], //array to contains the lessons that match the query//
+    filteredLessons: [], //array to contains the lessons that match the query
     checkoutNotAllowed: true, //boolean variable that returns whether checkout page can be accessed or not
     onLessonPage: true, //boolean variable that returns whether user is currently on lesson page or not
     clientName: "", //stores client's name
